@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano App</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body{
+            width: 100%;
+            min-height: 100vh;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e3f2fd;
+
+        }
+
+        .wrapper{
+            width: 780px;
+            border-radius: 20px;
+            padding: 35px 40px;
+            background:#141414;
+        }
+        .wrapper header{
+            color: #b2b2b2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+
+        header h2{
+            font-size: 1.6rem;
+
+        }
+        header .column{
+            display: flex;
+            align-items: center;
+        }
+
+        header.column span {
+            font-weight: 500;
+            margin-right: 15px;
+            font-size: 1.19rem;
+        }
+
+        .volume-slider input {
+            accent-color:#fff ;
+        }
+        .keys-checkbox span{
+            margin-right:px;
+        }
+        .piano-keys{
+    display: flex;
+    margin-top: 40px;
+}
+        .piano-keys .key {
+            list-style: none;
+            color:#a2a2a2;
+        }
+
+        .piano-keys .keys{
+            cursor: pointer;
+            color:#a2a2a2;
+            list-style: none;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .piano-keys .white{
+            width: 70px;
+            height: 230px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #000;
+            background: linear-gradient(#fff 96%,#eee 4%) ;
+        }
+        .piano-keys .black{
+            width: 44px;
+            height: 140px;
+            margin: 0 -22px 0 -22px;
+            z-index: 2;
+            background: black;
+            border-radius: 0 0 5px 5px;
+            background: linear-gradient(#333,#000 4%) ;
+        }
+
+        .piano-keys span{
+            position:absolute;
+            bottom: 20px;
+            width: 100%;
+            font-size: 1.13rem;
+            text-align:center;
+        }
+
+        .piano-keys .white.active{
+            box-shadow: inset -5px 5px 20px rgba(0,0,0,0.2);
+            background: linear-gradient(to bottom,#fff 0%,#9cf808 100%) ;
+        }
+
+        .piano-keys .black.active{
+            box-shadow: inset -5px 5px 20px rgba(255,255,255,0.1);
+            background: linear-gradient(to bottom,#0000 ,#0935e9) ;
+        }
+        /* From Uiverse.io by gharsh11032000 */ 
+/* The switch - the box around the slider */
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3em;
+  height: 1.7em;
+  margin-left: 10px;
+  padding-right: 2px;
+  
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  border: 2px solid #414141;
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1em;
+  width: 1em;
+  left: 0.2em;
+  bottom: 0.2em;
+  background-color: white;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.switch input:checked + .slider {
+  box-shadow: 0 0 20px rgba(9, 117, 241, 0.8);
+  border: 2px solid #0974f1;
+  margin: -1px;
+  padding-bottom: 10px;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(1.5em);
+}
+
+
+
+.piano-keys .hide span {
+    display: none;
+
+}
+
+@media screen and (max-width: 815px) {
+    .wrapper {
+        padding: 25px;
+    }
+    header{
+        margin: 10px;
+        flex-direction: column;
+    }
+    header:where(h2,.column){
+        margin-bottom: 13px;
+        margin : 10px;
+    }
+
+    .volume-slider input {
+        max-width: 150px;
+        margin: 15px;
+    }
+
+    .piano-keys{
+        margin-top: 20px;
+    }
+
+    .piano-keys .key:where(:nth-child(9), :nth-child(10)){
+        height: 100px;
+        width: 40px;
+        margin: 0 -20px 0 -20px;
+    }
+
+    .piano-keys .white {
+        height: 180px;
+        width: 60px;
+    }
+    
+}
+
+
+@media screen and (max-width:615px) {
+    .piano-keys .key:nth-child(13),
+    .piano-keys .key:nth-child(14),
+    .piano-keys .key:nth-child(15),
+    .piano-keys .key:nth-child(16),
+    .piano-keys .key:nth-child(17){
+        display:none;
+
+    }
+    .piano-keys .white {
+        width: 50px;
+    }
+   
+    
+}
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h2>Playable Piano</h2>
+            <div class="column volume-slider">
+                <span>Volume</span> <input type="range" min="0" max="1" value="0.5" step="any">
+            
+
+            </div>
+
+            <div class="column keys-checkbox">
+                <span>Show Keys</span>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                  </label>
+                
+                
+            </div>
+        </header>
+
+        <ul class="piano-keys">
+            <li class="keys white" data-key="a"><span>a</span></li>
+            <li class="keys black" data-key="w"><span>w</span></li>
+            <li class="keys white" data-key="s"><span>s</span></li>
+            
+            <li class="keys black" data-key="e"><span>e</span></li>
+            <li class="keys white" data-key="d"><span>d</span></li>
+            <li class="keys white" data-key="f"><span>f</span></li>
+            <li class="keys black" data-key="t"><span>t</span></li>
+            <li class="keys white" data-key="g"><span>g</span></li>
+            <li class="keys black" data-key="y"><span>y</span></li>
+            <li class="keys white" data-key="h"><span>h</span></li>
+            <li class="keys black" data-key="u"><span>u</span></li>
+            <li class="keys white" data-key="j"><span>j</span></li>
+            <li class="keys white" data-key="k"><span>k</span></li>
+            <li class="keys black" data-key="o"><span>o</span></li>
+            <li class="keys white" data-key="l"><span>l</span></li>
+            <li class="keys black" data-key="p"><span>p</span></li>
+            <li class="keys white" data-key=";"><span>;</span></li>
+        </ul>
+    </div>
+
+
+    <script>
+        const pianokeys = document.querySelectorAll(".piano-keys .keys"),
+        volumeslider = document.querySelector(".volume-slider input"),
+        keysCheckbox = document.querySelector(".keys-checkbox input")
+
+        let allkeys = [],
+         audio = new Audio("tunes/a.wav");// by default , audio src is "a" tune
+
+        const playTune = (key) => {
+            audio.src=`tunes/${key}.wav`;//passing audio src based on key pressed
+            audio.play();// playing audio
+
+            const clickedkey = document.querySelector(`[data-key="${key}"]`);
+            clickedkey.classList.add("active"); //adding active class to the clicked key element
+            setTimeout(() => {
+                clickedkey.classList.remove("active");// removing active class after 150ms from the clicked key element
+            },150);
+
+        }
+
+        pianokeys.forEach(key => {
+
+            allkeys.push(key.dataset.key);
+            // callign playTune Function with passing value as an argument
+            key.addEventListener("click",() => playTune(key.dataset.key));
+        });
+
+
+        const handleVolume = (e) => {
+            audio.volume = e.target.value; // passing the range slider value as an audio volume
+        }
+
+        const showHideKeys = () => {
+            //toggling hide class from each key on the checkbox click
+            pianokeys.forEach(key => key.classList.toggle("hide"));
+        }
+
+        const pressedkey = (e) => {
+
+            //if the pressed key is in the allkeys array  only call the playTune function
+            if (allkeys.includes(e.key)) playTune(e.key);
+        }
+
+
+        keysCheckbox.addEventListener("click",showHideKeys);
+        volumeslider.addEventListener("input",handleVolume);
+        document.addEventListener("keydown",pressedkey);
+        
+    </script>
+</body>
+</html>

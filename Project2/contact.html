@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Sending app</title>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("W8CLx0bzonkkomeOG");
+   })();
+</script>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            box-sizing: border-box;
+
+        }
+        body{
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        input,textarea{
+            width: 80%;
+            margin:10px;
+            padding: 15px;
+           
+        }
+        button{
+            height: 30px;
+            width:30%;
+            margin-left: 38%;
+
+
+        }
+        div{
+            border:2px solid black;
+            padding: 20px;
+            margin: auto;
+            border-radius: 10px;
+            cursor: url('https://cdn.custom-cursor.com/packs/9572/medium/among-us-holiday-character-pack.png'),auto;
+        }
+    </style>
+</head>
+<body>
+    <form>
+    <div>
+      
+    <input type="text" placeholder="Full Name" id="name" required>
+    <br>
+    <input type="email" placeholder="Email ID" name="email" id="email" required> <br>
+    <textarea name="" placeholder="Message" id="message" name="message" required></textarea> <br>
+    <button type="submit" onclick="sendMail()">Send</button>
+</form>
+    <script>
+        function sendMail(){
+            let params = {
+                name : document.getElementById("name").value,
+                email : document.getElementById("email").value,
+                message : document.getElementById("message").value,
+            }
+//emailjs.send('serviceid',templateid,values)
+            emailjs.send("service_ixjw1oa","template_57bl7kq",params).then(alert("Email Sent!!"))
+        }
+    </script>
+</div>
+</body>
+</html>

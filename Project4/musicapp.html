@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App</title>
+    <script src="https://kit.fontawesome.com/d45860799d.js" crossorigin="anonymous"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
+        }
+
+        .container{
+            width: 100%;
+            height: 90vh;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .music-player{
+            background: #ffe0e5;
+            width: 400px;
+            padding: 25px 35px;
+            text-align: center;
+            border-radius: 20px;
+        }
+
+        nav{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        nav .circle{
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            background: #fff;
+            color: #f53192;
+            box-shadow: 0 5px 10px rgba(255,26,26,0.22);
+
+        }
+
+        .song-img{
+            width: 300px;
+            height: 250px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            box-shadow: 0 10px 60px rgba(255,26,26,0.22);
+        }
+
+        .music-player h1{
+            font-size: 20px;
+            font-weight: 400;
+            color:#333;
+            margin-top: 20px;
+        }
+
+        .music-player p{
+            font-size: 14px;
+            color:#333;
+        }
+
+        #progress{
+          
+            width: 100%;
+            height: 6px;
+            background: #f53192;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 40px 0;
+        }
+
+        #progress::-webkit-slider-thumb{
+            -webkit-appearance: none;
+            background: #f53192;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border:8px solid #fff;
+            box-shadow: 0 5px 5px rgba(255,26,26,0.22);
+        }
+
+        .controls{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .controls div{
+            width: 60px;
+            height: 60px;
+            margin: 20px;
+            background: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color:#f53192;
+            box-shadow: 0 10px 20px rgba(255,26,26,0.22);
+            cursor: pointer;
+        }
+
+        .controls div:nth-child(2){
+            transform: scale(1.25);
+            background: #f53192;
+            color:white;
+        }
+        .volume{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 10vh;
+        }
+
+        .volume input{
+            margin-left: 10px;
+            outline: none;
+            
+            background: #f53192;
+            height: 10px;
+            border-radius: 20px;
+            width: 200px;
+        }
+
+        .volume  input::-webkit-slider-thumb{
+            -webkit-appearance: none;
+            background: #f53192;
+            width: 30px;
+            height: 30px;
+            border: 8px solid white;
+            outline: #333;
+            box-shadow: 2px 2px 10px 2px  #d57f7f;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="volume">
+        <span>Volume</span>
+        <input type="range" name="voulumecontrol" class ="volume" id="volume" value="0.5" max="1" min="0" step="any">
+    </div>
+    <div class="container">
+        
+        <div class="music-player">
+            <nav>
+                <a href="musicapp2.html">
+            <div class="circle">
+                
+                <i class="fa-solid fa-angle-left"></i>
+            </div></a>
+            <div class="circle">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            </nav>
+
+            <img src="https://imgs.search.brave.com/ipW1qgygYTjJOsJGN54MaFy0FqyZWdaeLEBmCYik3aA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly92YXJp/ZXR5LmNvbS93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyMS8wMy9V/bnRpdGxlZC5qcGc_/dz0xMDAwJmg9NjY3/JmNyb3A9MQ" alt="" class="song-img">
+            
+            <h1>Despacito</h1>
+            <p>Luis Fonsi Ft. Puerto Rican</p>
+
+            <audio id="song" src="despacitosong.mp3"  type="audio"  autoplay="false"></audio>
+
+            <input type="range" value="0" id ="progress">
+
+            <div class="controls">
+                <div class="backward" onclick="back()"><i class="fa-solid fa-backward"></i></div>
+                <div onclick="playpause()"><i class="fa-solid fa-play" id="ctrlIcon"></i></div>
+                <div onclick="nextsong()" id="nextsong"><i class="fa-solid fa-forward"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let progress = document.getElementById("progress");
+        let song = document.getElementById("song");
+        let ctrlIcon = document.getElementById("ctrlIcon");
+        let nextsong = document.getElementById("nextsong");
+        let volumebutt = document.querySelector(".volume input");
+
+
+        let backward = document.querySelector(".backward");
+        
+
+        let audio = new Audio("despacitosong.mp3");
+        audio.play();
+
+
+       
+        
+        const handleVolume = (e) => {
+                audio.volume = e.target.value; // passing the range slider value as an audio volume
+            }
+       
+        song.onloadedmetadata = () => {
+            progress.max = song.duration;
+            progress.value = song.currentTime;
+        }
+
+
+        function playpause() {
+            if (ctrlIcon.classList.contains("fa-pause")){
+                song.pause();
+                ctrlIcon.classList.remove("fa-pause");
+                ctrlIcon.classList.add("fa-play");
+            }else{
+                song.play();
+                ctrlIcon.classList.remove("fa-play");
+                ctrlIcon.classList.add("fa-pause");
+            }
+        }
+        
+
+        if (song.play()){
+            setInterval(() => {
+                progress.value = song.currentTime;
+            },1000);
+        }
+
+        
+        progress.onchange = function()  {
+            song.play();
+            song.currentTime = progress.value;
+            ctrlIcon.classList.remove("fa-play");
+            ctrlIcon.classList.add("fa-pause");
+            
+        }
+
+        volumebutt.addEventListener("input",handleVolume);
+
+        
+       
+    </script>
+</body>
+</html>
+

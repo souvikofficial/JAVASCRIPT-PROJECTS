@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider app</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .main{
+            width:1000px;
+            height:500px;
+            margin:auto;
+            overflow: hidden;
+            margin-top: 100px;
+            box-shadow: 0px 0px 10px green;
+            position: relative;
+        }
+        .slide {
+            height: 100%;
+            width:100%;
+            position : absolute;
+            transition: transform 0.5s ease;
+            object-fit: cover;
+        }
+        .nav {
+            text-align :center;
+            margin-top: 30px;
+
+        }
+        button{
+            width:50px;
+            height: 30px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <img class="slide" src="https://fastly.picsum.photos/id/16/2500/1667.jpg?hmac=uAkZwYc5phCRNFTrV_prJ_0rP0EdwJaZ4ctje2bY7aE" alt="">
+        <img class="slide" src="https://images.unsplash.com/2/03.jpg?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+        <img class="slide" src="https://images.unsplash.com/3/jerry-adney.jpg?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+        <img class="slide" src="https://images.unsplash.com/5/pier.JPG?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+    </div>
+    <div class="nav">
+        <button onclick="goprev()">PREV</button>
+        <button onclick="gonext()">NEXT</button>
+    </div>
+    <script>
+        const slides = document.querySelectorAll(".slide");
+        let counter = 0;
+
+        slides.forEach((slide,index) => {
+            slide.style.left = `${index * 100}%`;
+        });
+
+        const gonext = () => {
+            counter++;
+            if(counter >= slides.length){
+                counter=0;
+            } 
+            slideimage();
+        };
+        const goprev = () => {
+            counter--;
+            if (counter < 0) {
+                counter = slides.length - 1; // Loop back to the last slide
+            }
+            slideimage();
+        };
+
+        const slideimage = () => {
+            slides.forEach((slide) =>{
+                slide.style.transform = `translateX(-${counter * 100}%)`;
+                });
+        };
+
+    </script>
+</body>
+</html>
